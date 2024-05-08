@@ -159,8 +159,8 @@ func _process(delta):
 	elif weapon_state == WEAPON.SWORD and Input.is_action_just_pressed("draw_weapon"):
 		setWeapon(WEAPON.SWORD_BACK)
 		
-	if Input.is_action_just_pressed("attack_1"):
-		get_parent().push_dialogue.emit(1)
+	#if Input.is_action_just_pressed("attack_1"):
+		#get_parent().push_dialogue.emit(1)
 	
 func updateAnimationTree(anim_state: ANIMATION, velo: Vector2):
 	velocity = velo
