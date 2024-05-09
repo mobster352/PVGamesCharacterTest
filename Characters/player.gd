@@ -30,6 +30,8 @@ var knockback_strength : float = 10.0
 var can_move : bool = true
 var can_attack : bool
 var can_interact : bool = false
+var is_interacting : bool = false
+var direction: Vector2
 
 static func new_player(direction : DIRECTION, weapon : WEAPON):
 	var my_scene : PackedScene = load("res://Characters/player.tscn")
@@ -155,13 +157,16 @@ func _ready():
 	setWeapon(weapon_state)
 
 func _process(delta):
+	if Input.is_action_just_pressed("interact") and can_interact:
+		get_parent().interact.emit()
+		can_interact = false
+	if is_interacting:
+		return
+		
 	if weapon_state == WEAPON.SWORD_BACK and Input.is_action_just_pressed("draw_weapon"):
 		setWeapon(WEAPON.SWORD)
 	elif weapon_state == WEAPON.SWORD and Input.is_action_just_pressed("draw_weapon"):
 		setWeapon(WEAPON.SWORD_BACK)
-		
-	if Input.is_action_just_pressed("interact") and can_interact:
-		get_parent().push_dialogue.emit(0)
 	
 func updateAnimationTree(anim_state: ANIMATION, velo: Vector2):
 	velocity = velo
@@ -177,10 +182,11 @@ func updateAnimationTree(anim_state: ANIMATION, velo: Vector2):
 		animationTree.set("parameters/conditions/walk", anim_state == ANIMATION.WALK)
 
 func _physics_process(delta):
-	if is_attacking:
+	if is_attacking or is_interacting:
+		updateAnimationTree(ANIMATION.IDLE, Vector2.ZERO + knockback)
 		return
 	
-	var direction: Vector2 = Vector2(Input.get_axis("move_left", "move_right"), Input.get_axis("move_up", "move_down"))
+	direction = Vector2(Input.get_axis("move_left", "move_right"), Input.get_axis("move_up", "move_down"))
 	
 	if !can_move:
 			direction = Vector2.ZERO
