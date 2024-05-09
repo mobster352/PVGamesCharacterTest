@@ -29,6 +29,7 @@ var knockback : Vector2 = Vector2.ZERO
 var knockback_strength : float = 10.0
 var can_move : bool = true
 var can_attack : bool
+var can_interact : bool = false
 
 static func new_player(direction : DIRECTION, weapon : WEAPON):
 	var my_scene : PackedScene = load("res://Characters/player.tscn")
@@ -159,8 +160,8 @@ func _process(delta):
 	elif weapon_state == WEAPON.SWORD and Input.is_action_just_pressed("draw_weapon"):
 		setWeapon(WEAPON.SWORD_BACK)
 		
-	if Input.is_action_just_pressed("attack_1"):
-		get_parent().push_dialogue.emit(1)
+	if Input.is_action_just_pressed("interact") and can_interact:
+		get_parent().push_dialogue.emit(0)
 	
 func updateAnimationTree(anim_state: ANIMATION, velo: Vector2):
 	velocity = velo
@@ -257,3 +258,6 @@ func getKnockbackFromDirectionState(dir_state : DIRECTION):
 	elif dir_state == DIRECTION.UP_RIGHT:
 		return Vector2(20, -20)
 		
+
+func set_can_interact(can_interact : bool):
+	self.can_interact = can_interact

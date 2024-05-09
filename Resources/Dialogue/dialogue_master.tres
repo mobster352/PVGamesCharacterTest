@@ -1,0 +1,12 @@
+[gd_resource type="JSON" format=3 uid="uid://me0c7cabu4tg"]
+
+[resource]
+data = [{
+"dialogue": "Test",
+"id": 0.0,
+"portrait": "res://PVGames Assets/Male_Footman/Face_1.png"
+}, {
+"dialogue": "Test2",
+"id": 1.0,
+"portrait": "res://PVGames Assets/Male_Footman/Face_1.png"
+}]

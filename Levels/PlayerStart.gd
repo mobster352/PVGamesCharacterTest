@@ -1,13 +1,18 @@
 extends Marker2D
 
-signal push_dialogue(dialogue_id : int)
+var player : Player
+
+signal push_dialogue(dialogue_index : int)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var player : Player = Player.new_player(Player.DIRECTION.DOWN, Player.WEAPON.UNARMED)
+	player = Player.new_player(Player.DIRECTION.DOWN, Player.WEAPON.UNARMED)
 	add_child(player)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+func _on_level_update_interaction(can_interact):
+	player.set_can_interact(can_interact)
