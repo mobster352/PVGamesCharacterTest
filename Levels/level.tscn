@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://61fv4pa71ycl"]
+[gd_scene load_steps=27 format=3 uid="uid://61fv4pa71ycl"]
 
 [ext_resource type="Script" path="res://Levels/main.gd" id="1_6u5ge"]
 [ext_resource type="Texture2D" uid="uid://c06e852hp2oc0" path="res://PVGames Assets/Medieval_Warfare_Tiles/Siege Pieces/Medieval_Warfare_Siege_44.png" id="2_bd8qg"]
@@ -7714,6 +7714,9 @@ size = Vector2(32, 1240)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lfcld"]
 size = Vector2(2176, 32)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ekuwi"]
+radius = 82.0061
+
 [sub_resource type="Curve2D" id="Curve2D_dxpor"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, -296, 1, 0, 0, 0, 0, -259, -93)
@@ -7748,6 +7751,7 @@ layer_4/y_sort_enabled = true
 layer_4/tile_data = PackedInt32Array(589841, 1179657, 3, 131090, 1572873, 12, 393234, 1572873, 12, 458770, 1572873, 12, -786451, 10, 0, 1703915, 11, 14, 1769451, 11, 15, 1834987, 11, 16, 1900523, 11, 17, 1966059, 11, 18, 2031595, 11, 19, 2097131, 11, 20, 2162667, 11, 21, 2228203, 11, 22, 2293739, 11, 23, 2359275, 11, 24, 2424811, 11, 25, 2490347, 11, 26, 2555883, 11, 27, 2621419, 11, 28, 2686955, 11, 29, 2752491, 11, 30, 2818027, 11, 31, 2883563, 11, 32, 1703916, 65547, 14, 1769452, 65547, 15, 1834988, 65547, 16, 1900524, 65547, 17, 1966060, 65547, 18, 2031596, 65547, 19, 2097132, 65547, 20, 2162668, 65547, 21, 2228204, 65547, 22, 2293740, 65547, 23, 2359276, 65547, 24, 2424812, 65547, 25, 2490348, 65547, 26, 2555884, 65547, 27, 2621420, 65547, 28, 2686956, 65547, 29, 2752492, 65547, 30, 2818028, 65547, 31, 2883564, 65547, 32, 1703917, 131083, 14, 1769453, 131083, 15, 1834989, 131083, 16, 1900525, 131083, 17, 1966061, 131083, 18, 2031597, 131083, 19, 2097133, 131083, 20, 2162669, 131083, 21, 2228205, 131083, 22, 2293741, 131083, 23, 2359277, 131083, 24, 2424813, 131083, 25, 2490349, 131083, 26, 2555885, 131083, 27, 2621421, 131083, 28, 2686957, 131083, 29, 2752493, 131083, 30, 2818029, 131083, 31, 2883565, 131083, 32, 983019, 11, 9, 1048555, 11, 10, 1114091, 11, 11, 1179627, 11, 12, 1245163, 11, 13, 1310699, 11, 14, 1376235, 11, 15, 1441771, 11, 16, 1507307, 11, 17, 1572843, 11, 16, 1638379, 11, 17, 983020, 65547, 9, 1048556, 65547, 10, 1114092, 65547, 11, 1179628, 65547, 12, 1245164, 65547, 13, 1310700, 65547, 14, 1376236, 65547, 15, 1441772, 65547, 16, 1507308, 65547, 17, 1572844, 65547, 16, 1638380, 65547, 17, 983021, 131083, 9, 1048557, 131083, 10, 1114093, 131083, 11, 1179629, 131083, 12, 1245165, 131083, 13, 1310701, 131083, 14, 1376237, 131083, 15, 1441773, 131083, 16, 1507309, 131083, 17, 1572845, 131083, 16, 1638381, 131083, 17, 851947, 11, 7, 917483, 11, 8, 851948, 65547, 7, 917484, 65547, 8, 851949, 131083, 7, 917485, 131083, 8, -327683, 1572873, 21)
 
 [node name="VoidCollision" type="StaticBody2D" parent="TileMap"]
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/VoidCollision"]
 position = Vector2(1264, 52)
@@ -7756,6 +7760,14 @@ shape = SubResource("RectangleShape2D_pqn41")
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="TileMap/VoidCollision"]
 position = Vector2(192, 688)
 shape = SubResource("RectangleShape2D_lfcld")
+
+[node name="ObjectCollision" type="Area2D" parent="TileMap"]
+unique_name_in_owner = true
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/ObjectCollision"]
+position = Vector2(-33, -84)
+shape = SubResource("CircleShape2D_ekuwi")
 
 [node name="Characters" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -7783,4 +7795,7 @@ texArray = Array[Texture2D]([ExtResource("4_27x37"), ExtResource("5_ocpoc"), Ext
 [node name="UI" parent="." instance=ExtResource("13_2hrfw")]
 unique_name_in_owner = true
 
+[connection signal="update_interaction" from="." to="Characters/PlayerStart" method="_on_level_update_interaction"]
+[connection signal="body_entered" from="TileMap/ObjectCollision" to="." method="_on_object_collision_body_entered"]
+[connection signal="body_exited" from="TileMap/ObjectCollision" to="." method="_on_object_collision_body_exited"]
 [connection signal="push_dialogue" from="Characters/PlayerStart" to="." method="_on_player_start_push_dialogue"]
