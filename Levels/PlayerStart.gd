@@ -2,7 +2,7 @@ extends Marker2D
 
 var player : Player
 
-signal push_dialogue(dialogue_index : int)
+signal interact()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,3 +16,7 @@ func _process(delta):
 
 func _on_level_update_interaction(can_interact):
 	player.set_can_interact(can_interact)
+
+
+func _on_level_update_is_interacting(is_interacting):
+	player.is_interacting = is_interacting

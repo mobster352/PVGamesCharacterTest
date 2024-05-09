@@ -1,8 +1,9 @@
-[gd_scene load_steps=27 format=3 uid="uid://61fv4pa71ycl"]
+[gd_scene load_steps=29 format=3 uid="uid://61fv4pa71ycl"]
 
 [ext_resource type="Script" path="res://Levels/main.gd" id="1_6u5ge"]
 [ext_resource type="Texture2D" uid="uid://c06e852hp2oc0" path="res://PVGames Assets/Medieval_Warfare_Tiles/Siege Pieces/Medieval_Warfare_Siege_44.png" id="2_bd8qg"]
 [ext_resource type="Texture2D" uid="uid://v804gbirslx" path="res://PVGames Assets/Medieval_Warfare_Tiles/Medieval_Warfare_6.png" id="2_bha0t"]
+[ext_resource type="Script" path="res://Resources/Custom Data Types/interaction_dictionary.gd" id="2_eqbw4"]
 [ext_resource type="Texture2D" uid="uid://cg6c6351ryh6j" path="res://PVGames Assets/Medieval_Warfare_Tiles/Warfare_A2.png" id="2_uma1s"]
 [ext_resource type="PackedScene" uid="uid://hhs6bw4he2vl" path="res://Characters/enemy.tscn" id="3_lpfy6"]
 [ext_resource type="Texture2D" uid="uid://cr5fwmjmll0nf" path="res://PVGames Assets/Medieval_Warfare_Tiles/Siege Pieces/Medieval_Warfare_Siege_47.png" id="3_t5sse"]
@@ -14,6 +15,12 @@
 [ext_resource type="Texture2D" uid="uid://b60s65yakn402" path="res://PVGames Assets/Male_Orc_1/male_orc1_attacking.png" id="6_kg10y"]
 [ext_resource type="Script" path="res://Levels/PlayerStart.gd" id="6_u8w3d"]
 [ext_resource type="PackedScene" uid="uid://ck0y74suwcdx6" path="res://UI/ui.tscn" id="13_2hrfw"]
+
+[sub_resource type="Resource" id="Resource_85o7f"]
+script = ExtResource("2_eqbw4")
+interaction_option = 1
+interaction_ids = Array[int]([0])
+path_to_collider = "TileMap/ObjectCollision"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2qg78"]
 texture = ExtResource("2_uma1s")
@@ -7726,6 +7733,7 @@ point_count = 2
 [node name="Level" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_6u5ge")
+interaction_dictionary = Array[ExtResource("2_eqbw4")]([SubResource("Resource_85o7f")])
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -7774,7 +7782,7 @@ y_sort_enabled = true
 
 [node name="PlayerStart" type="Marker2D" parent="Characters"]
 y_sort_enabled = true
-position = Vector2(1056, -160)
+position = Vector2(122, -98)
 script = ExtResource("6_u8w3d")
 
 [node name="Path2D" type="Path2D" parent="Characters"]
@@ -7796,6 +7804,8 @@ texArray = Array[Texture2D]([ExtResource("4_27x37"), ExtResource("5_ocpoc"), Ext
 unique_name_in_owner = true
 
 [connection signal="update_interaction" from="." to="Characters/PlayerStart" method="_on_level_update_interaction"]
+[connection signal="update_is_interacting" from="." to="Characters/PlayerStart" method="_on_level_update_is_interacting"]
 [connection signal="body_entered" from="TileMap/ObjectCollision" to="." method="_on_object_collision_body_entered"]
 [connection signal="body_exited" from="TileMap/ObjectCollision" to="." method="_on_object_collision_body_exited"]
-[connection signal="push_dialogue" from="Characters/PlayerStart" to="." method="_on_player_start_push_dialogue"]
+[connection signal="interact" from="Characters/PlayerStart" to="." method="_on_player_start_interact"]
+[connection signal="interact" from="UI" to="UI" method="_on_interact"]
