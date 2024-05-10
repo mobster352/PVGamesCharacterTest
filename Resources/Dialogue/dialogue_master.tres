@@ -4,5 +4,6 @@
 data = [{
 "dialogue": "test",
 "id": 0.0,
-"portrait": "res://PVGames Assets/Male_Footman/Face_1_test.png"
+"portrait": "res://PVGames Assets/Male_Footman/Face_1_test.png",
+"style": ""
 }]
