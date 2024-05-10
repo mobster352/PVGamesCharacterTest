@@ -20,7 +20,7 @@
 script = ExtResource("2_eqbw4")
 interaction_option = 1
 interaction_ids = Array[int]([0])
-path_to_collider = "TileMap/ObjectCollision"
+collision_shape_index = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2qg78"]
 texture = ExtResource("2_uma1s")
@@ -7805,7 +7805,7 @@ unique_name_in_owner = true
 
 [connection signal="update_interaction" from="." to="Characters/PlayerStart" method="_on_level_update_interaction"]
 [connection signal="update_is_interacting" from="." to="Characters/PlayerStart" method="_on_level_update_is_interacting"]
-[connection signal="body_entered" from="TileMap/ObjectCollision" to="." method="_on_object_collision_body_entered"]
-[connection signal="body_exited" from="TileMap/ObjectCollision" to="." method="_on_object_collision_body_exited"]
+[connection signal="body_shape_entered" from="TileMap/ObjectCollision" to="." method="_on_object_collision_body_shape_entered"]
+[connection signal="body_shape_exited" from="TileMap/ObjectCollision" to="." method="_on_object_collision_body_shape_exited"]
 [connection signal="interact" from="Characters/PlayerStart" to="." method="_on_player_start_interact"]
 [connection signal="interact" from="UI" to="UI" method="_on_interact"]
